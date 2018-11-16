@@ -1,0 +1,58 @@
+﻿
+@model ComPro.Models.DetailViewModel
+@using Microsoft.AspNet.Identity;
+@using ComPro.Models;
+@using ComPro.Helpers;
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="MyModal">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Model.Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <i>Starts: @Model.Date.ToString("dd.MMM.yyyy hh:mm") at @Model.Place</i>
+                    <br />
+                    @if (Model.EndDate >= Model.Date)
+                    {
+                        <span> Ends: @Model.EndDate.ToString("dd.MMM.yyyy hh:mm")</span>
+                    }
+
+                    <br />
+                    <i>Owner: @Model.CreatorName</i>
+                </p>
+                <p>
+                    @Model.Description
+                </p>
+                <p>
+                    @if (Model.MembersList.Where(x => x.PerticipetingType == "Going").Count() == 0)
+                    {
+                        <div class="alert alert-light" role="alert">
+                            <h5>No one responded to this event yet</h5>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-light" role="alert">
+                            <h5>These members are going to this event</h5>
+                            @foreach (var m in Model.MembersList.Where(x => x.PerticipetingType == "Going"))
+                            {
+                                <h6><a href="#"> @m.Member.UserName.UserName()</a></h6>
+                            }
+                        </div>
+
+                    }
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

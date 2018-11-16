@@ -1,0 +1,45 @@
+﻿@using ComPro.Helpers
+@using Microsoft.AspNet.Identity
+@model List<ComPro.Models.SiteContibuter>
+@{
+    ViewBag.Title = "Contributer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Contributers to this project</h3>
+<hr/>
+<div class="jumbotron">
+    This site is a community project and open source. Different people from the Bangladeshi professional society in Denmark
+    has contributed to this site. And we need more contribution. 
+    <br/>
+    If you think you can or want to contribute please come up with your unique ideas, get the source code and develop.
+    However, please note that it is not only programming that you can contribute with. You can also contribute with content modification,
+    generating new ideas, graphics enrichment etc.
+    <br />
+    The current site needs contribution in the following areas;
+    <ul>
+        <li>Frontend development</li>
+        <li>Testing</li>
+        <li>Further feature development</li>
+        <li>Graphics</li>
+        <li>Content writing</li>
+    </ul>
+
+</div>
+<div>
+    @foreach (var c in Model)
+    {
+        <div class="row border border-light rounded" style="margin-bottom:3px; padding: 3px;">
+            <div class="col-md-2">
+                <img src="@c.PhotoPath" class="img-thumbnail" style="width:100px;height:100px;"/>
+            </div>
+            <div class="col-md-10">
+                <h4> @UserInformation.UserName(c.ContributingUser.Email)</h4>
+                <p>
+                    @c.Contribution
+                </p>
+            </div>
+        </div>
+    }
+</div>
+

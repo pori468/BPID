@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<ComPro.Models.UserInfo>
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+
+
+        <div class="col-sm-auto">
+            <img src="@item.Photo" class="img-thumbnail" style="width:80px;height:80px;" />
+        </div>
+        <div class="col-sm">
+            <a href="#" onclick="Latest_Member_Details('@item.UserId');" data-toggle="popover" data-placement="top" title="@item.Name" data-content="@item.CurrentJobTitle at @item.CompanyName">@item.Name</a> , <i>@item.CurrentJobTitle</i> just joined.
+        </div>
+      
+
+    }
+</div>
+
+
+<script>
+
+    function Latest_Member_Details(id) {
+    
+        
+        var url = "/UserProfile/ChangeId";
+
+        $.ajax({
+
+            url: url,
+            data: { id: id },
+
+            success: function (Id) {
+
+                
+                var url = "/UserProfile/Details";
+
+                $.ajax({
+
+                    url: url,
+                    data: { id: Id },
+
+                    success: function (data) {
+                        $('#Latest_Detailscontainer').html(data);
+                        $('#MemDetails').modal();
+                    }
+
+                });
+            }
+
+        });
+
+       
+
+    }
+</script>
+<div id="Latest_Detailscontainer">
+</div>

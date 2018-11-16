@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ComPro.Models.UserInfo>
+
+<h2 class="text-success"> @Model.Count() Members </h2><br />
+@foreach (var item in Model)
+{
+    <div class="row border border-light rounded" style="margin-bottom:3px; padding: 3px;">
+        <div class="col-md-auto">
+            <img src="@item.Photo" alt="@item.Name" class="img-thumbnail" style="width:100px;height:100px;">
+        </div>
+        <div class="col-md-10">
+            @*<h3><a href="#" onClick="MemberDetails(@item.Id)" ;>@item.Name</a></h3>*@
+            <h3>@item.Name</h3>
+            <p>
+                Current position: @item.CurrentJobTitle
+                <br />
+                Employee: @item.CompanyName
+                <br />
+                Skills: @item.Skills
+            </p>
+        </div>
+    </div>
+}
+
+
+
+
+<script>
+    function MemberDetails(id) {
+        var id = id;
+        var url = "/UserProfile/Details";
+
+        $.ajax({
+
+            url: url,
+            data: { id: id },
+
+            success: function (data) {
+                $('#Detailscontainer').html(data);
+                $('#MemDetails').modal();
+            }
+
+        });
+
+    }
+</script>
+<div id="Detailscontainer">
+</div>

@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+@using ComPro.Helpers
+@using ComPro.Models
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    @*@User.Identity.GetUserName()*@
+                    @UserInformation.UserName(User.Identity.GetUserName())
+                    
+                  
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/userprofile/MyPage"><i class="fas fa-user"></i> My Profile</a>
+                    <a class="dropdown-item" href="/Event/MyEvent"><i class="fas fa-calendar-alt"></i> My Events</a>
+                    <a class="dropdown-item" href="/NoticeBoard/MyNotice"><i class="fas fa-newspaper"></i> My Notices</a>
+                    <a class="dropdown-item" href="/Account/AccountSettings"><i class="fas fa-cog"></i>Account Settings</a>
+                    
+                    @if (User.IsInRole(Enums.UserRole.Administrator.ToString()))
+                    {
+                        <a class="dropdown-item" href="/Archive/Upload"><i class="fas fa-upload"></i>Upload to archive</a>
+                    }
+                    @*<div class="dropdown-divider"></div>*@
+                    <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()"> <i class="fas fa-sign-out-alt"></i> Log off</a>
+                </div>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+
+        <li><i class="fas fa-sign-in-alt"></i> @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
